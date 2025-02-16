@@ -1,0 +1,54 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <NeutralLanguage>en</NeutralLanguage>
+    <Title>San.MdbLogging</Title>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <Version>$(Version)</Version>
+    <VersionPrefix>8.3.2</VersionPrefix>
+
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <WarningLevel>0</WarningLevel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <WarningLevel>0</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="FodyWeavers.xsd" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MethodBoundaryAspect.Fody" Version="2.0.149" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.12" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.12">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.12" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.12">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Features" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="8.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="8.0.0" />
+    <PackageReference Include="MongoDB.Bson" Version="2.30.0" />
+    <PackageReference Include="MongoDB.Driver" Version="2.30.0" />
+    <PackageReference Include="MongoDB.Driver.Core" Version="2.30.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="San.CachableRepository" Version="2.0.3" />
+  </ItemGroup>
+</Project>

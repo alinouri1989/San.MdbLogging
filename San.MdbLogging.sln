@@ -1,0 +1,30 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35122.118
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "San.MdbLogging", "San.MdbLoging\San.MdbLogging.csproj", "{34D52842-2BBD-48A6-B92F-4972CAAB0572}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "San.MdbLogging.TestWorker", "San.MdbLogging.TestWorker\San.MdbLogging.TestWorker.csproj", "{F051FB76-E7F6-4BE8-BD45-BAD0AA435B64}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{34D52842-2BBD-48A6-B92F-4972CAAB0572}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34D52842-2BBD-48A6-B92F-4972CAAB0572}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34D52842-2BBD-48A6-B92F-4972CAAB0572}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34D52842-2BBD-48A6-B92F-4972CAAB0572}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F051FB76-E7F6-4BE8-BD45-BAD0AA435B64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F051FB76-E7F6-4BE8-BD45-BAD0AA435B64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F051FB76-E7F6-4BE8-BD45-BAD0AA435B64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F051FB76-E7F6-4BE8-BD45-BAD0AA435B64}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {52E328D6-6C38-437F-ACD8-06B4865A307E}
+	EndGlobalSection
+EndGlobal
