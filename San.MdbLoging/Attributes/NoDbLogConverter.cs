@@ -2,7 +2,7 @@
 using Newtonsoft.Json.Linq;
 using System.Reflection;
 
-namespace San.MDbLogging.Attributes;
+namespace San.MdbLogging.Attributes;
 public class NoDbLogConverter : JsonConverter
 {
     public override bool CanConvert(Type objectType)

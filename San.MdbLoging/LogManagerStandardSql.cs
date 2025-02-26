@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using Newtonsoft.Json;
-using San.MDbLogging.BgTasks;
-using San.MDbLogging.Models;
+using San.MdbLogging.BgTasks;
+using San.MdbLogging.Models;
 using System;
 
-namespace San.MDbLogging;
+namespace San.MdbLogging;
 
 public class LogManagerStandardSql<TEntity, LType> : ISQLLogger<TEntity, LType>
                                                     where LType : ILoggable

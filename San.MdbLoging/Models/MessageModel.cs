@@ -1,5 +1,5 @@
 ﻿
-namespace San.MDbLogging.Models;
+namespace San.MdbLogging.Models;
 
 public class MessageModel
 {

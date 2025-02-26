@@ -5,11 +5,11 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson.IO;
 using Newtonsoft.Json;
-using San.MDbLogging.BgTasks;
-using San.MDbLogging.Models;
+using San.MdbLogging.BgTasks;
+using San.MdbLogging.Models;
 using San.SqlLogging;
 
-namespace San.MDbLogging;
+namespace San.MdbLogging;
 
 public class LogManagerSql<T> where T : BaseSqlModel
 {

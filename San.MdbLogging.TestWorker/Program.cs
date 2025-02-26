@@ -1,9 +1,9 @@
-using San.CoreCommon.ServiceActivator;
+using Common.Activation;
 using San.MdbLogging.TestWorker;
-using San.MDbLogging;
+using San.MdbLogging;
 
 var builder = Host.CreateApplicationBuilder(args);
-builder.Services.AddSanLoggerSql<LogUpdatePrice>(builder.Configuration,lifetime:ServiceLifetime.Singleton);
+builder.Services.AddSanLoggerSql<LogUpdatePrice>(builder.Configuration, lifetime: ServiceLifetime.Singleton);
 builder.Services.AddHostedService<Worker>();
 var serviceProvider = builder.Services.BuildServiceProvider();
 ServiceActivator.Configure(serviceProvider);

@@ -1,6 +1,6 @@
-﻿using San.MDbLogging.Models;
+﻿using San.MdbLogging.Models;
 
-namespace San.MDbLogging;
+namespace San.MdbLogging;
 
 public interface ISQLLogger<TEntity, LType> where LType : ILoggable
     where TEntity : BaseSqlModel

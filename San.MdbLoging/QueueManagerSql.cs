@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.Options;
-using San.MDbLogging.Models;
+using San.MdbLogging.Models;
 using San.SqlLogging;
 
-namespace San.MDbLogging;
+namespace San.MdbLogging;
 
 public class QueueManagerSql<T> where T : BaseSqlModel
 {

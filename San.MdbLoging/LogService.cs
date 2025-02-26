@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.Options;
 using MongoDB.Driver;
-using San.MDbLogging.Models;
+using San.MdbLogging.Models;
 using System.Diagnostics;
 
-namespace San.MDbLogging;
+namespace San.MdbLogging;
 
 public class LogService<T> where T : BaseMongoModel
 {

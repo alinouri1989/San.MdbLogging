@@ -2,10 +2,10 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using San.MDbLogging.BgTasks;
-using San.MDbLogging.Models;
+using San.MdbLogging.BgTasks;
+using San.MdbLogging.Models;
 
-namespace San.MDbLogging;
+namespace San.MdbLogging;
 public class LogManager<T> where T : BaseMongoModel
 {
     private QueueManager<T> _queueManager;

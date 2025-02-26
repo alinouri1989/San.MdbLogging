@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.Logging;
 using MongoDB.Bson.Serialization.Conventions;
 using Newtonsoft.Json;
-using San.MDbLogging.Attributes;
+using San.MdbLogging.Attributes;
 
-namespace San.MDbLogging;
+namespace San.MdbLogging;
 public static class CloningService
 {
     public static T Clone<T>(this T source)

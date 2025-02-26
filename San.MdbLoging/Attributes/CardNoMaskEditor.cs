@@ -1,7 +1,7 @@
-﻿using San.MDbLogging.Attributes;
+﻿using San.MdbLogging.Attributes;
 using System.Reflection;
 
-namespace San.MDbLogging.Attributes;
+namespace San.MdbLogging.Attributes;
 
 public class CardNoMaskEditor
 {

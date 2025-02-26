@@ -2,7 +2,7 @@
 using Newtonsoft.Json.Serialization;
 using System.Reflection;
 
-namespace San.MDbLogging.Attributes;
+namespace San.MdbLogging.Attributes;
 public class ShouldSerializeContractResolver : DefaultContractResolver
 {
     protected new virtual JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)

@@ -1,10 +1,10 @@
 ﻿using Microsoft.Extensions.Hosting;
-using San.MDbLogging.Models;
+using San.MdbLogging.Models;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace San.MDbLogging.BgTasks
+namespace San.MdbLogging.BgTasks
 {
     public class QueuedHostedService<T> : BackgroundService where T : IBaseModel
     {

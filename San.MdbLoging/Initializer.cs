@@ -1,4 +1,6 @@
-﻿using DataAccess.Repository.Common;
+﻿using Common.DataAccess.Repository;
+using Common.DataAccess.Repository.Base;
+using Common.DataAccess.Repository.Common;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -11,14 +13,12 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson.Serialization;
 using Quartz.Logging;
-using Repository.Base;
-using Repository;
 using San.MdbLogging.LogFile;
-using San.MDbLogging.BgTasks;
-using San.MDbLogging.Models;
+using San.MdbLogging.BgTasks;
+using San.MdbLogging.Models;
 using San.SqlLogging;
 
-namespace San.MDbLogging;
+namespace San.MdbLogging;
 
 public static class Initializer
 {
@@ -107,7 +107,7 @@ public static class Initializer
             return (string colName) => new LogManager<T>(sp2, sp2.GetRequiredService<IOptions<LogDatabaseSettings>>(), sp2.GetRequiredService<QueueManager<T>>(), colName);
         });
     }
-  
+
     /// <summary>  
     /// Add Service Sql Logger with lifetime  
     /// </summary>  
@@ -171,8 +171,8 @@ public static class Initializer
                 }
                 break;
 
-            case ServiceLifetime.Transient:  
-                services.Configure<LogDatabaseSettings>(configuration.GetSection("LogDatabaseSettings")); 
+            case ServiceLifetime.Transient:
+                services.Configure<LogDatabaseSettings>(configuration.GetSection("LogDatabaseSettings"));
                 services.AddDbContextFactory<LogDbContext<T>>(options =>
                 {
                     var config = configuration.GetSection("LogDatabaseSettings").Get<LogDatabaseSettings>();

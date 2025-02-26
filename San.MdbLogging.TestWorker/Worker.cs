@@ -1,5 +1,4 @@
-using Azure.Core;
-using San.MDbLogging;
+using San.MdbLogging;
 
 namespace San.MdbLogging.TestWorker
 {

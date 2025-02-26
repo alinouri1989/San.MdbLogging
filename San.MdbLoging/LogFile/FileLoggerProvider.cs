@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Configuration;
 using Microsoft.Extensions.Options;
-using San.MDbLogging;
+using San.MdbLogging;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;

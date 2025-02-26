@@ -1,10 +1,10 @@
 ﻿using Microsoft.Extensions.Options;
-using San.MDbLogging.Models;
+using San.MdbLogging.Models;
 using System.Collections.Concurrent;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace San.MDbLogging.BgTasks
+namespace San.MdbLogging.BgTasks
 {
     public class BackgroundTaskQueue<T> : IBackgroundTaskQueue<T> where T : IBaseModel
     {

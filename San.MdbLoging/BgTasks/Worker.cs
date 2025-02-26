@@ -1,8 +1,8 @@
-﻿using San.MDbLogging.Models;
+﻿using San.MdbLogging.Models;
 using System.Diagnostics;
 
 
-namespace San.MDbLogging.BgTasks;
+namespace San.MdbLogging.BgTasks;
 
 public class Worker<T> : IWorker<T> where T : BaseMongoModel
 {

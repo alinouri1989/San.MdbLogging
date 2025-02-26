@@ -1,7 +1,8 @@
-﻿using San.MDbLogging.Models;
+﻿using San.MdbLogging.Models;
 
 namespace San.MdbLogging.TestWorker
 {
+#nullable disable
     public class LogUpdatePrice : BaseSqlModel
     {
         public string Message { get; set; }
@@ -14,6 +15,6 @@ namespace San.MdbLogging.TestWorker
         public string Metadata { get; set; }
         public string InsuranceType { get; set; }
         public string NationalCode { get; set; }
-        public string Logger { get; set; }
+        public new string Logger { get; set; }
     }
 }

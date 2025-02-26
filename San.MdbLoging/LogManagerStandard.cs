@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
-using San.MDbLogging.BgTasks;
-using San.MDbLogging.Models;
+using San.MdbLogging.BgTasks;
+using San.MdbLogging.Models;
 
-namespace San.MDbLogging;
+namespace San.MdbLogging;
 
 public class LogManagerStandard<LType> : IMdbLogger<LType> where LType : ILoggable
 {

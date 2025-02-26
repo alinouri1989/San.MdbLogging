@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using San.MDbLogging.Models;
+using San.MdbLogging.Models;
 namespace San.SqlLogging;
 
 public class LogDbContext<T> : DbContext where T : BaseSqlModel

@@ -3,15 +3,15 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
-using San.MDbLogging.Attributes;
-using San.MDbLogging.BgTasks;
-using San.MDbLogging.Models;
+using San.MdbLogging.Attributes;
+using San.MdbLogging.BgTasks;
+using San.MdbLogging.Models;
 using System;
 using System.Diagnostics;
 using System.Reflection;
 using System.Security.Claims;
 
-namespace San.MDbLogging;
+namespace San.MdbLogging;
 
 public class LoggingAspect : OnMethodBoundaryAspect
 {

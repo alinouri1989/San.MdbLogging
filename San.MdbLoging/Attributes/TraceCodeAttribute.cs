@@ -1,5 +1,5 @@
 ﻿
-namespace San.MDbLogging.Attributes;
+namespace San.MdbLogging.Attributes;
 
 public class TraceCodeAttribute : Attribute
 {

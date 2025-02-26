@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Hosting;
-using San.MDbLogging.Models;
+using San.MdbLogging.Models;
 
-namespace San.MDbLogging.BgTasks;
+namespace San.MdbLogging.BgTasks;
 
 public class BackgroundWorker<T> : IHostedService where T : class
 {

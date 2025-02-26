@@ -1,4 +1,4 @@
-﻿namespace San.MDbLogging.Attributes;
+﻿namespace San.MdbLogging.Attributes;
 
 public class CardNoMaskAttribute : Attribute
 {

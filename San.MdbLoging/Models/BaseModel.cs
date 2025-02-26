@@ -2,7 +2,7 @@
 using MongoDB.Bson.Serialization.Attributes;
 
 
-namespace San.MDbLogging.Models;
+namespace San.MdbLogging.Models;
 
 //public class BaseSqlModel
 //{

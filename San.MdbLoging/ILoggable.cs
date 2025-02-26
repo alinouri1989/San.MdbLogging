@@ -1,4 +1,4 @@
-﻿namespace San.MDbLogging
+﻿namespace San.MdbLogging
 {
   public interface ILoggable
   {
