@@ -1,43 +1,51 @@
-﻿using San.MdbLogging.Attributes;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Linq;
+using MongoLogger;
 using System.Reflection;
 
-namespace San.MdbLogging.Attributes;
-
-public class CardNoMaskEditor
+namespace MongoLogger.Attributes
 {
-    public void Edit(object instance, ref object editdObj)
+    public class CardNoMaskEditor
     {
-        IEnumerable<PropertyInfo> enumerable = from pi in instance.GetType().GetProperties()
-                                               where Attribute.IsDefined(pi, typeof(CardNoMaskAttribute))
-                                               select pi;
-        editdObj = instance.Clone();
-        foreach (PropertyInfo item in enumerable)
+        public void Edit(object instance,ref object editdObj)
         {
-            Convert.ChangeType(editdObj, instance.GetType());
-            editdObj.GetType().GetType().GetProperty(item.Name);
-        }
-    }
-
-    private object mask(object value)
-    {
-        if (value == null)
-        {
-            return null;
+            var propsWithMaskAttrs = instance.GetType().GetProperties().Where(pi => Attribute.IsDefined(pi, typeof(CardNoMaskAttribute)));
+                        editdObj = instance.Clone();
+            foreach (var pi in propsWithMaskAttrs)
+            {
+                var editdObjCast = Convert.ChangeType(editdObj, instance.GetType());
+                var piCopy = editdObj.GetType().GetType().GetProperty(pi.Name);
+                
+                                                                            }
         }
 
-        string text = value.ToString();
-        return (text.Length != 16) ? value : (text.Substring(0, 6) + "******" + text.Substring(12, 4));
-    }
-
-    private void SetProperty(string compoundProperty, object target, object value)
-    {
-        string[] array = compoundProperty.Split('.');
-        for (int i = 0; i < array.Length - 1; i++)
+        private object mask(object value)
         {
-            target = target.GetType().GetProperty(array[i]).GetValue(target, null);
+            if (value == null)
+                return null;
+
+            var valStr = value.ToString();
+            if (valStr.Length != 16)
+                return value;
+
+            var firstPart = valStr.Substring(0, 6);
+            var lastPart = valStr.Substring(12, 4);
+            var convertedVal = firstPart + "******" + lastPart;
+            return convertedVal;
         }
 
-        target.GetType().GetType().GetProperty(array.Last())
-            .SetValue(target, value, null);
+        private void SetProperty(string compoundProperty, object target, object value)
+        {
+            string[] bits = compoundProperty.Split('.');
+            for (int i = 0; i < bits.Length - 1; i++)
+            {
+                PropertyInfo propertyToGet = target.GetType().GetProperty(bits[i]);
+                target = propertyToGet.GetValue(target, null);
+            }
+            PropertyInfo propertyToSet = target.GetType().GetType().GetProperty(bits.Last());
+            propertyToSet.SetValue(target, value, null);
+        }
     }
 }

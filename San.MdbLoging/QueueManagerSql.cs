@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
+using MongoLogger.Models;
 using San.MdbLogging.Models;
 using San.SqlLogging;
 

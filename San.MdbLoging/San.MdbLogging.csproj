@@ -8,7 +8,7 @@
     <Title>San.MdbLogging</Title>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <Version>$(Version)</Version>
-    <VersionPrefix>3.9.2</VersionPrefix>
+    <VersionPrefix>3.9.3</VersionPrefix>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <WarningLevel>0</WarningLevel>

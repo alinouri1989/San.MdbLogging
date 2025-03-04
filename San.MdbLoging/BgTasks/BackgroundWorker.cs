@@ -1,32 +1,34 @@
 ﻿using Microsoft.Extensions.Hosting;
-using San.MdbLogging.Models;
+using MongoLogger.Models;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
-namespace San.MdbLogging.BgTasks;
-
-public class BackgroundWorker<T> : IHostedService where T : class
+namespace MongoLogger.BgTasks
 {
-    private readonly IWorker<T> _worker;
-
-    private readonly T _item;
-
-    public T Item { get; set; }
-
-    public BackgroundWorker(IWorker<T> worker)
+    public class BackgroundWorker<T> : IHostedService where T : BaseMongoModel
     {
-        _worker = worker;
-    }
-
-    public async Task StartAsync(CancellationToken cancellationToken)
-    {
-        if (Item != null)
+        readonly IWorker<T> _worker;
+        readonly T _item;
+        public BackgroundWorker(IWorker<T> worker)
         {
-            await _worker.DoWork(Item, cancellationToken);
+            _worker = worker;
+        }
+
+        public T Item { get; set; }
+
+        public async Task StartAsync(CancellationToken cancellationToken)
+        {
+            if (Item != null)
+                await _worker.DoWork(Item, cancellationToken);
+
+        }
+
+        public Task StopAsync(CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
         }
     }
-
-    public Task StopAsync(CancellationToken cancellationToken)
-    {
-        throw new NotImplementedException();
-    }
 }
-

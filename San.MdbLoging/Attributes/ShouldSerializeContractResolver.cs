@@ -1,18 +1,29 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using System;
+using System.Collections.Generic;
 using System.Reflection;
+using System.Text;
 
-namespace San.MdbLogging.Attributes;
-public class ShouldSerializeContractResolver : DefaultContractResolver
+namespace MongoLogger.Attributes
 {
-    protected new virtual JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
+    public class ShouldSerializeContractResolver : DefaultContractResolver
     {
-        JsonProperty jsonProperty = base.CreateProperty(member, memberSerialization);
-        if (Attribute.IsDefined(member, typeof(NoDbLog)))
+        
+        protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
         {
-            jsonProperty.ShouldSerialize = (object instance) => false;
-        }
+            JsonProperty property = base.CreateProperty(member, memberSerialization);
+            
+            if (Attribute.IsDefined(member,typeof(NoDbLog)))
+            {
+                property.ShouldSerialize =
+                    instance =>
+                    {
+                        return false;
+                    };
+            }
 
-        return jsonProperty;
+            return property;
+        }
     }
 }

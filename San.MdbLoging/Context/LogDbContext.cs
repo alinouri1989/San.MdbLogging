@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MongoLogger.Models;
 using San.MdbLogging.Models;
 namespace San.SqlLogging;
 
@@ -9,9 +10,10 @@ public class LogDbContext<T> : DbContext where T : BaseSqlModel
     {
     }
 
-    public DbSet<T> Logs { get; set; } 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+    public DbSet<T> Logs { get; set; }
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        modelBuilder.Entity<T>().ToTable(typeof(T).Name);         modelBuilder.Entity<T>().Property(e => e.TraceCode);     }
+        modelBuilder.Entity<T>().ToTable(typeof(T).Name); modelBuilder.Entity<T>().Property(e => e.TraceCode);
+    }
 }

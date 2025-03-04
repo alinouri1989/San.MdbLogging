@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
+using MongoLogger;
+using MongoLogger.BgTasks;
+using MongoLogger.Models;
 using Newtonsoft.Json;
-using San.MdbLogging.BgTasks;
 using San.MdbLogging.Models;
 using System;
 
@@ -33,13 +35,13 @@ public class LogManagerStandardSql<TEntity, LType> : ISQLLogger<TEntity, LType>
         string level = exception != null ? "ERROR" : "INFO";
         string traceCode = Guid.NewGuid().ToString();
 
-                if (_httpContextAccessor != null && _httpContextAccessor.HttpContext != null &&
-            string.IsNullOrWhiteSpace((string)_httpContextAccessor.HttpContext.Items["LogGuid"]))
+        if (_httpContextAccessor != null && _httpContextAccessor.HttpContext != null &&
+    string.IsNullOrWhiteSpace((string)_httpContextAccessor.HttpContext.Items["LogGuid"]))
         {
             _httpContextAccessor.HttpContext.Items.Add("LogGuid", traceCode);
         }
 
-        
+
         var logModelProperties = typeof(TEntity).GetProperties();
 
         var staticProperties = new Dictionary<string, object>
@@ -51,7 +53,7 @@ public class LogManagerStandardSql<TEntity, LType> : ISQLLogger<TEntity, LType>
                 { "Logger", _logType.Name }
             };
 
-                foreach (var entry in staticProperties)
+        foreach (var entry in staticProperties)
         {
             var targetProperty = logModelProperties.FirstOrDefault(p => p.Name == entry.Key);
             if (targetProperty != null)
@@ -60,7 +62,7 @@ public class LogManagerStandardSql<TEntity, LType> : ISQLLogger<TEntity, LType>
             }
         }
 
-                _backgroundTaskQueue.QueueBackgroundWorkItem(entityLog,async (model,ct) => await _logger.LogInternal(model));
+        _backgroundTaskQueue.QueueBackgroundWorkItem(entityLog, async (model, ct) => await _logger.LogInternal(model));
     }
 
     public void Log(TEntity entityLog)
@@ -68,24 +70,24 @@ public class LogManagerStandardSql<TEntity, LType> : ISQLLogger<TEntity, LType>
         DateTime now = DateTime.Now;
         string traceCode = Guid.NewGuid().ToString();
 
-                if (_httpContextAccessor != null && _httpContextAccessor.HttpContext != null &&
-            string.IsNullOrWhiteSpace((string)_httpContextAccessor.HttpContext.Items["LogGuid"]))
+        if (_httpContextAccessor != null && _httpContextAccessor.HttpContext != null &&
+    string.IsNullOrWhiteSpace((string)_httpContextAccessor.HttpContext.Items["LogGuid"]))
         {
             _httpContextAccessor.HttpContext.Items.Add("LogGuid", traceCode);
         }
 
-        
+
         var logModelProperties = typeof(TEntity).GetProperties();
-        
-                                                                                
+
+
         var staticProperties = new Dictionary<string, object>
             {
                 { "TraceCode", traceCode },
                 { "Logger", _logType.Name }
             };
 
-                                                                                                        
-                foreach (var entry in staticProperties)
+
+        foreach (var entry in staticProperties)
         {
             var targetProperty = logModelProperties.FirstOrDefault(p => p.Name == entry.Key);
             if (targetProperty != null)
@@ -94,7 +96,7 @@ public class LogManagerStandardSql<TEntity, LType> : ISQLLogger<TEntity, LType>
             }
         }
 
-                _backgroundTaskQueue.QueueBackgroundWorkItem(entityLog, async (model, ct) => await _logger.LogInternal(model));
+        _backgroundTaskQueue.QueueBackgroundWorkItem(entityLog, async (model, ct) => await _logger.LogInternal(model));
 
     }
 }

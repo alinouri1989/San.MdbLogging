@@ -1,7 +1,11 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace San.MdbLogging.Attributes;
-
-public class NoDbLog : BsonIgnoreAttribute
+namespace MongoLogger.Attributes
 {
+    public class NoDbLog: BsonIgnoreAttribute
+    {
+    }
 }

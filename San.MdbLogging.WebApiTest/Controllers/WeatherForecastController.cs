@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using MongoLogger;
 
 namespace San.MdbLogging.WebApiTest.Controllers;
 
@@ -30,7 +31,7 @@ public class WeatherForecastController : ControllerBase, ILoggable
         })
         .ToArray();
 
-        _logger.Log(546543213465, "ali", "Weather Hadler => ", result);
+        _logger.Log(546543213465, "Weather Hadler => ", result);
         return result;
     }
 }

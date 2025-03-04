@@ -1,4 +1,6 @@
-﻿using San.MdbLogging.Models;
+﻿using MongoLogger;
+using MongoLogger.Models;
+using San.MdbLogging.Models;
 
 namespace San.MdbLogging;
 

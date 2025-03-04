@@ -4,7 +4,8 @@ using System.Text;
 
 namespace MongoLogger.Attributes
 {
-    public class ReferenceIdAttribute : Attribute
+    public class TraceCodeAttribute : Attribute
     {
+        internal Guid TraceCode { get; set; }
     }
 }

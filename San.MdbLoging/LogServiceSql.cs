@@ -2,6 +2,7 @@
 using Common.DataAccess.Repository.Base;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
+using MongoLogger.Models;
 using San.MdbLogging.Models;
 using System.Diagnostics;
 using System.Linq;

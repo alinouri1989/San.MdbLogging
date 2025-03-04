@@ -1,35 +1,37 @@
-﻿using San.MdbLogging.Models;
+﻿using MongoLogger.Models;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
-
-namespace San.MdbLogging.BgTasks;
-
-public class Worker<T> : IWorker<T> where T : BaseMongoModel
+namespace MongoLogger.BgTasks
 {
-    private LogManager<T> _logManager;
-
-    public Worker(LogManager<T> logManager)
+    public class Worker<T> : IWorker<T> where T : BaseMongoModel
     {
-        _logManager = logManager;
-    }
-
-    public async Task DoWork(T item, CancellationToken cancellationToken)
-    {
-        while (!cancellationToken.IsCancellationRequested)
+        ILogManager<T> _logManager;
+        public Worker(ILogManager<T> logManager)
         {
-            try
+            _logManager = logManager;
+        }
+
+        public async Task DoWork(T item, CancellationToken cancellationToken)
+        {
+            while (!cancellationToken.IsCancellationRequested)
             {
-                await _logManager.LogInternal(item);
-            }
-            catch (Exception ex2)
-            {
-                Exception ex = ex2;
-                Debug.WriteLine(ex.ToString());
+                try
+                {
+                    await _logManager.LogInternal(item);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.ToString());
+                }
+                finally
+                {
+                }
             }
         }
     }
-}
-public interface IWorker<T> where T : class
-{
-    Task DoWork(T item, CancellationToken cancellationToken);
 }

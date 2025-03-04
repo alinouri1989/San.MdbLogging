@@ -4,8 +4,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson.IO;
+using MongoLogger.BgTasks;
+using MongoLogger.Models;
 using Newtonsoft.Json;
-using San.MdbLogging.BgTasks;
 using San.MdbLogging.Models;
 using San.SqlLogging;
 

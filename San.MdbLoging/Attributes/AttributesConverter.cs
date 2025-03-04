@@ -1,84 +1,103 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System.Reflection;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
-namespace San.MdbLogging.Attributes;
-
-public class AttributesConverter : JsonConverter
+namespace MongoLogger.Attributes
 {
-    public override bool CanConvert(Type objectType)
+    public class AttributesConverter : JsonConverter
     {
-        return true;
-    }
-
-    public override object ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-    {
-        IEnumerable<PropertyInfo> enumerable = from pi in value.GetType().GetProperties()
-                                               where Attribute.IsDefined(pi, typeof(CardNoMaskAttribute))
-                                               select pi;
-        IEnumerable<PropertyInfo> enumerable2 = from pi in value.GetType().GetProperties()
-                                                where Attribute.IsDefined(pi, typeof(NoDbLog))
-                                                select pi;
-        JToken jToken = JToken.FromObject(value);
-        JObject jObject = null;
-        if (jToken.Type == JTokenType.Object)
+        public override bool CanConvert(Type objectType)
         {
-            jObject = (JObject)jToken;
+            return true;
         }
 
-        if (enumerable != null && enumerable.Any())
+    
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            foreach (PropertyInfo item in enumerable)
+            throw new NotImplementedException();
+        }
+
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            var propsWithMaskAttrs = value.GetType().GetProperties().Where(pi => Attribute.IsDefined(pi, typeof(CardNoMaskAttribute)));
+            var propsWithNoLogAttrs = value.GetType().GetProperties().Where(pi => Attribute.IsDefined(pi, typeof(NoDbLog)));
+
+            JToken t = JToken.FromObject(value);
+            JObject o = null;
+            if (t.Type != JTokenType.Object)
             {
-                if (jToken.Type != JTokenType.Object)
-                {
-                    jToken.WriteTo(writer);
-                    continue;
-                }
-
-                IList<string> list = (from p in jObject.Properties()
-                                      select p.Name).ToList();
-                jObject.Remove(item.Name);
-                jObject.AddFirst(new JProperty(item.Name, mask(item.GetValue(value))));
-            }
-        }
-
-        if (enumerable2 != null && enumerable2.Any())
-        {
-            foreach (PropertyInfo item2 in enumerable2)
+                            }
+            else
             {
-                if (jToken.Type != JTokenType.Object)
-                {
-                    jToken.WriteTo(writer);
-                    continue;
-                }
-
-                IList<string> list2 = (from p in jObject.Properties()
-                                       select p.Name).ToList();
-                jObject.Remove(item2.Name);
+                o = (JObject)t;
             }
+
+            if (propsWithMaskAttrs != null && propsWithMaskAttrs.Any())
+                foreach (var pi in propsWithMaskAttrs)
+                {
+                    
+
+                    if (t.Type != JTokenType.Object)
+                    {
+                        t.WriteTo(writer);
+                    }
+                    else
+                    {
+                        IList<string> propertyNames = o.Properties().Select(p => p.Name).ToList();
+                        o.Remove(pi.Name);
+                        o.AddFirst(new JProperty(pi.Name, mask(pi.GetValue(value))));
+
+                        
+                    }
+                }
+            
+            if (propsWithNoLogAttrs != null && propsWithNoLogAttrs.Any())
+            {
+                foreach (var pi in propsWithNoLogAttrs)
+                {
+
+                    if (t.Type != JTokenType.Object)
+                    {
+                        t.WriteTo(writer);
+                    }
+                    else
+                    {
+                        IList<string> propertyNames = o.Properties().Select(p => p.Name).ToList();
+                        o.Remove(pi.Name);
+
+                    }
+                }
+            }
+            else
+            {
+
+                if (t.Type != JTokenType.Object)
+                {
+                    t.WriteTo(writer);
+                }
+            }
+
+            if(o!= null)
+            o.WriteTo(writer);
+
         }
-        else if (jToken.Type != JTokenType.Object)
+
+        private object mask(object value)
         {
-            jToken.WriteTo(writer);
+            if (value == null)
+                return null;
+
+            var valStr = value.ToString();
+            if (valStr.Length != 16)
+                return value;
+
+            var firstPart = valStr.Substring(0, 6);
+            var lastPart = valStr.Substring(12, 4);
+            var convertedVal = firstPart + "******" + lastPart;
+            return convertedVal;
         }
-
-        jObject?.WriteTo(writer);
-    }
-
-    private object mask(object value)
-    {
-        if (value == null)
-        {
-            return null;
-        }
-
-        string text = value.ToString();
-        return (text.Length != 16) ? value : (text.Substring(0, 6) + "******" + text.Substring(12, 4));
     }
 }

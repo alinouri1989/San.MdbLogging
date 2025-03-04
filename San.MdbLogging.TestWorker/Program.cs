@@ -1,6 +1,6 @@
 using Common.Activation;
+using MongoLogger;
 using San.MdbLogging.TestWorker;
-using San.MdbLogging;
 
 var builder = Host.CreateApplicationBuilder(args);
 builder.Services.AddSanLoggerSql<LogUpdatePrice>(builder.Configuration, lifetime: ServiceLifetime.Singleton);

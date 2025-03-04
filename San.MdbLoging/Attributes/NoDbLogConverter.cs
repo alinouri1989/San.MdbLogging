@@ -1,56 +1,64 @@
 ﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Linq;
 using Newtonsoft.Json.Linq;
-using System.Reflection;
 
-namespace San.MdbLogging.Attributes;
-public class NoDbLogConverter : JsonConverter
+namespace MongoLogger.Attributes
 {
-    public override bool CanConvert(Type objectType)
+    public class NoDbLogConverter : JsonConverter
     {
-        return true;
-    }
 
-    public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-    {
-        IEnumerable<PropertyInfo> enumerable = from pi in value.GetType().GetProperties()
-                                               where Attribute.IsDefined(pi, typeof(NoDbLog))
-                                               select pi;
-        if (enumerable != null && enumerable.Any())
+        public override bool CanConvert(Type objectType)
         {
-            foreach (PropertyInfo item in enumerable)
-            {
-                JToken jToken = JToken.FromObject(value);
-                if (jToken.Type != JTokenType.Object)
+            return true;
+        }
+
+
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            var propsWithMaskAttrs = value.GetType().GetProperties().Where(pi => Attribute.IsDefined(pi, typeof(NoDbLog)));
+            if (propsWithMaskAttrs != null && propsWithMaskAttrs.Any())
+                foreach (var pi in propsWithMaskAttrs)
                 {
-                    jToken.WriteTo(writer);
+                    JToken t = JToken.FromObject(value);
+
+                    if (t.Type != JTokenType.Object)
+                    {
+                        t.WriteTo(writer);
+                    }
+                    else
+                    {
+                        JObject o = (JObject)t;
+                        IList<string> propertyNames = o.Properties().Select(p => p.Name).ToList();
+                        o.Remove(pi.Name);
+                        o.AddFirst(new JProperty(pi.Name, string.Empty));
+
+                        o.WriteTo(writer);
+                    }
+                }
+            else
+            {
+                JToken t = JToken.FromObject(value);
+
+                if (t.Type != JTokenType.Object)
+                {
+                    t.WriteTo(writer);
                 }
                 else
                 {
-                    JObject jObject = (JObject)jToken;
-                    IList<string> list = (from p in jObject.Properties()
-                                          select p.Name).ToList();
-                    jObject.Remove(item.Name);
-                    jObject.AddFirst(new JProperty(item.Name, string.Empty));
-                    jObject.WriteTo(writer);
+                    JObject o = (JObject)t;
+
+                    o.WriteTo(writer);
                 }
+
             }
-
-            return;
-        }
-
-        JToken jToken2 = JToken.FromObject(value);
-        if (jToken2.Type != JTokenType.Object)
-        {
-            jToken2.WriteTo(writer);
-        }
-        else
-        {
-            jToken2.WriteTo(writer);
         }
     }
 }

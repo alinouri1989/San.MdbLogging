@@ -1,4 +1,4 @@
-using San.MdbLogging;
+using MongoLogger;
 
 namespace San.MdbLogging.TestWorker
 {
