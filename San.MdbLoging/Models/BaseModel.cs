@@ -1,4 +1,5 @@
 ﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Attributes;
 
 
@@ -27,13 +28,15 @@ public interface IBaseModel
 
 public class BaseMongoModel : IBaseModel, IBaseModel<string>
 {
-    public string Id { get; set; }
+    [BsonId]
+    [BsonRepresentation(BsonType.ObjectId)]
+    public string Id { get; set; } = ObjectId.GenerateNewId().ToString();
     public string TraceCode { get; set; }
 }
 
 public class BaseSqlModel : IBaseModel, IBaseModel<long>
 {
-    public long Id { get; set; }
+    public long Id { get; set; } = ObjectId.GenerateNewId().CreationTime.Ticks;
     public string TraceCode { get; set; }
     public string Logger { get; set; }
 }

@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "San.MdbLogging", "San.MdbLo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "San.MdbLogging.TestWorker", "San.MdbLogging.TestWorker\San.MdbLogging.TestWorker.csproj", "{F051FB76-E7F6-4BE8-BD45-BAD0AA435B64}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "San.MdbLogging.WebApiTest", "San.MdbLogging.WebApiTest\San.MdbLogging.WebApiTest.csproj", "{88397257-086C-40DB-B3D6-A31651694CC1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +22,10 @@ Global
 		{F051FB76-E7F6-4BE8-BD45-BAD0AA435B64}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F051FB76-E7F6-4BE8-BD45-BAD0AA435B64}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F051FB76-E7F6-4BE8-BD45-BAD0AA435B64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88397257-086C-40DB-B3D6-A31651694CC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88397257-086C-40DB-B3D6-A31651694CC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88397257-086C-40DB-B3D6-A31651694CC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88397257-086C-40DB-B3D6-A31651694CC1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -48,14 +48,14 @@ public class LogManagerStandard<LType> : IMdbLogger<LType> where LType : ILoggab
         logModel.User = user;
         logModel.BusinessDate = date.ToString("yyyy/MM/dd");
         logModel.CreateDate = now;
-        logModel.Exception = ex;
+        logModel.Exception = (ex == null) ? string.Empty : JsonConvert.SerializeObject(ex);
         logModel.Message = message;
-        logModel.Data = content;
+        logModel.Data = (ex == null) ? string.Empty : JsonConvert.SerializeObject(content);
         logModel.Level = level;
         logModel.Logger = _logType.Name;
         logModel.ReferenceNo = referenceNo;
         logModel.TraceCode = text;
-        logModel.ExStr = ((ex == null) ? string.Empty : JsonConvert.SerializeObject(ex));
+        logModel.ExStr = (ex == null) ? string.Empty : JsonConvert.SerializeObject(ex.InnerException);
         _backgroundTaskQueue.QueueBackgroundWorkItem(logModel, async (u, i) => await _logger.LogInternal(u));
     }
 
@@ -79,14 +79,14 @@ public class LogManagerStandard<LType> : IMdbLogger<LType> where LType : ILoggab
         logModel.User = user;
         logModel.BusinessDate = date.ToString("yyyy/MM/dd");
         logModel.CreateDate = now;
-        logModel.Exception = ex;
+        logModel.Exception = (ex == null) ? string.Empty : JsonConvert.SerializeObject(ex);
         logModel.Message = message;
-        logModel.Data = content;
+        logModel.Data = JsonConvert.SerializeObject(content);
         logModel.Level = level;
         logModel.Logger = _logType.Name;
         logModel.ReferenceNo = referenceNo;
         logModel.TraceCode = text;
-        logModel.ExStr = ((ex == null) ? string.Empty : JsonConvert.SerializeObject(ex));
-        _backgroundTaskQueue.QueueBackgroundWorkItem(logModel,async (u,i) => await _logger.LogInternal(u));
+        logModel.ExStr = (ex == null) ? string.Empty : JsonConvert.SerializeObject(ex.InnerException);
+        _backgroundTaskQueue.QueueBackgroundWorkItem(logModel, async (u, i) => await _logger.LogInternal(u));
     }
 }

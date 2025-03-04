@@ -1,0 +1,6 @@
+@San.MdbLogging.WebApiTest_HostAddress = http://localhost:5149
+
+GET {{San.MdbLogging.WebApiTest_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -13,8 +13,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson.Serialization;
 using Quartz.Logging;
-using San.MdbLogging.LogFile;
 using San.MdbLogging.BgTasks;
+using San.MdbLogging.LogFile;
 using San.MdbLogging.Models;
 using San.SqlLogging;
 
@@ -34,7 +34,7 @@ public static class Initializer
     /// <param name="services"></param>
     /// <param name="configuration"></param>
     /// <param name="lifetime"></param>
-    public static void AddSanLogger<T, TKey>(this IServiceCollection services, IConfiguration configuration, ServiceLifetime lifetime) where T : BaseMongoModel
+    public static void AddSanLogger<T>(this IServiceCollection services, IConfiguration configuration, ServiceLifetime lifetime) where T : BaseMongoModel
     {
         // Configure database settings  
         services.Configure<LogDatabaseSettings>(configuration.GetSection("LogDatabaseSettings"));
@@ -86,7 +86,7 @@ public static class Initializer
     /// <typeparam name="TKey"></typeparam>
     /// <param name="services"></param>
     /// <param name="configuration"></param>
-    public static void AddSanLogger<T, TKey>(this IServiceCollection services, IConfiguration configuration) where T : BaseMongoModel
+    public static void AddSanLogger<T>(this IServiceCollection services, IConfiguration configuration) where T : BaseMongoModel
     {
         services.Configure<LogDatabaseSettings>(configuration.GetSection("LogDatabaseSettings"));
         services.AddSingleton(typeof(LogService<T>));

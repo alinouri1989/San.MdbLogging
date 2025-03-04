@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
+using MongoDB.Bson.IO;
 using MongoDB.Driver;
 using San.MdbLogging.Models;
 using System.Diagnostics;
@@ -17,7 +18,7 @@ public class LogService<T> where T : BaseMongoModel
         }
         catch (Exception ex)
         {
-            Debug.Fail(ex.ToString());
+            Debug.Fail(ex.Message, Newtonsoft.Json.JsonConvert.SerializeObject(ex.Message));
         }
     }
 
@@ -34,13 +35,29 @@ public class LogService<T> where T : BaseMongoModel
 
     public async Task<T> Create(T log)
     {
-        await _logs.InsertOneAsync(log);
-        return log;
+        try
+        {
+            await _logs.InsertOneAsync(log);
+            return log;
+        }
+        catch (Exception ex)
+        {
+            Debug.Fail(ex.Message, Newtonsoft.Json.JsonConvert.SerializeObject(ex.Message));
+            throw;
+        }
     }
 
     public async Task Create(IEnumerable<T> logs)
     {
-        await _logs.InsertManyAsync(logs);
+        try
+        {
+            await _logs.InsertManyAsync(logs);
+        }
+        catch (Exception ex)
+        {
+            Debug.Fail(ex.Message, Newtonsoft.Json.JsonConvert.SerializeObject(ex.Message));
+            throw;
+        }
     }
 
     public void Update(string id, T log)

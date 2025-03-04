@@ -4,32 +4,20 @@ namespace San.MdbLogging.Models;
 
 public class LogModel : BaseMongoModel
 {
-    public string? User { get; set; }
-
+    public string? User { get; set; } = string.Empty; // Initialize to avoid null  
     public long? ReferenceNo { get; set; }
-
-    [BsonElement]
     public DateTime CreateDate { get; set; }
-
-    public string BusinessDate { get; set; }
-
-    public string Logger { get; set; }
-
-    public string Level { get; set; }
-
-    public string Message { get; set; }
-
+    public string BusinessDate { get; set; } = string.Empty; // Initialize to avoid null  
+    public string Logger { get; set; } = string.Empty; // Initialize to avoid null  
+    public string Level { get; set; } = string.Empty; // Initialize to avoid null  
+    public string Message { get; set; } = string.Empty; // Initialize to avoid null  
     public object Data { get; set; }
-
-    public Exception Exception { get; set; }
-
-    public string ExStr { get; set; }
+    public object Exception { get; set; } = null!; // Initialize to avoid null  
+    public string ExStr { get; set; } = string.Empty; // Initialize to avoid null  
 
     public long MId
     {
         get => this.CreateDate.Ticks;
-        set
-        {
-        }
+        set { }
     }
 }
