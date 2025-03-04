@@ -23,7 +23,6 @@ namespace San.MdbLogging.BgTasks
             {
                 try
                 {
-                                        var workItem = await _taskQueue.DequeueAsync(stoppingToken);
 
                     if (workItem != null)
                     {
@@ -45,7 +44,7 @@ namespace San.MdbLogging.BgTasks
 
                                                 public override async Task StopAsync(CancellationToken stoppingToken)
         {
-            Debug.WriteLine("QueuedHostedService is stopping.");
+
             await base.StopAsync(stoppingToken);
         }
     }

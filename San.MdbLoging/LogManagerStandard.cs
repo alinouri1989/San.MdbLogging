@@ -31,6 +31,7 @@ public class LogManagerStandard<LType> : IMdbLogger<LType> where LType : ILoggab
         if (ex != null)
         {
             level = "ERROR";
+            _backgroundTaskQueue.QueueBackgroundWorkItem(logModel, async (u, i) => await _logger.LogInternal(u));
         }
 
         string text = null;
