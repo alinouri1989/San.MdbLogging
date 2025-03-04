@@ -26,28 +26,17 @@ public static class Initializer
 
     private static bool _isHttpAccessorAdded;
 
-    /// <summary>
-    /// Add Service MongoDb Logger generic with lifetime
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <typeparam name="TKey"></typeparam>
-    /// <param name="services"></param>
-    /// <param name="configuration"></param>
-    /// <param name="lifetime"></param>
-    public static void AddSanLogger<T>(this IServiceCollection services, IConfiguration configuration, ServiceLifetime lifetime) where T : BaseMongoModel
+                                    public static void AddSanLogger<T>(this IServiceCollection services, IConfiguration configuration, ServiceLifetime lifetime) where T : BaseMongoModel
     {
-        // Configure database settings  
-        services.Configure<LogDatabaseSettings>(configuration.GetSection("LogDatabaseSettings"));
+                services.Configure<LogDatabaseSettings>(configuration.GetSection("LogDatabaseSettings"));
 
-        // Register logging services with the specified lifetime  
-        services.Add(new ServiceDescriptor(typeof(LogService<T>), typeof(LogService<T>), lifetime));
+                services.Add(new ServiceDescriptor(typeof(LogService<T>), typeof(LogService<T>), lifetime));
 
         services.Add(new ServiceDescriptor(typeof(QueueManager<T>), serviceProvider =>
         {
             var options = serviceProvider.GetRequiredService<IOptions<LogDatabaseSettings>>();
             var logger = serviceProvider.GetRequiredService<LogService<T>>();
-            var batchSize = options.Value.BatchSize; // Assuming BatchSize is a property of LogDatabaseSettings  
-            return new QueueManager<T>(options, serviceProvider, logger, batchSize);
+            var batchSize = options.Value.BatchSize;             return new QueueManager<T>(options, serviceProvider, logger, batchSize);
         }, lifetime));
 
         services.Add(new ServiceDescriptor(typeof(LogManager<T>), serviceProvider =>
@@ -57,8 +46,7 @@ public static class Initializer
             return new LogManager<T>(serviceProvider, options, queueManager);
         }, lifetime));
 
-        // Register hosted services if not already added  
-        if (!_isHostedServicesAdded)
+                if (!_isHostedServicesAdded)
         {
             services.AddHttpContextAccessor();
             services.Add(new ServiceDescriptor(typeof(IMdbLogger<>), typeof(LogManagerStandard<>), lifetime));
@@ -67,8 +55,7 @@ public static class Initializer
             _isHostedServicesAdded = true;
         }
 
-        // Register a factory for LogManager<T>  
-        services.Add(new ServiceDescriptor(typeof(Func<string, LogManager<T>>), serviceProvider =>
+                services.Add(new ServiceDescriptor(typeof(Func<string, LogManager<T>>), serviceProvider =>
         {
             return (string colName) =>
             {
@@ -79,14 +66,7 @@ public static class Initializer
         }, lifetime));
     }
 
-    /// <summary>
-    /// Add Service MongoDb Logger with singleton lifetime
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <typeparam name="TKey"></typeparam>
-    /// <param name="services"></param>
-    /// <param name="configuration"></param>
-    public static void AddSanLogger<T>(this IServiceCollection services, IConfiguration configuration) where T : BaseMongoModel
+                                public static void AddSanLogger<T>(this IServiceCollection services, IConfiguration configuration) where T : BaseMongoModel
     {
         services.Configure<LogDatabaseSettings>(configuration.GetSection("LogDatabaseSettings"));
         services.AddSingleton(typeof(LogService<T>));
@@ -108,14 +88,7 @@ public static class Initializer
         });
     }
 
-    /// <summary>  
-    /// Add Service Sql Logger with lifetime  
-    /// </summary>  
-    /// <typeparam name="T"></typeparam>  
-    /// <param name="services"></param>  
-    /// <param name="configuration"></param>  
-    /// <param name="lifetime"></param>  
-    public static void AddSanLoggerSql<T>(this IServiceCollection services, IConfiguration configuration, ServiceLifetime lifetime) where T : BaseSqlModel
+                                public static void AddSanLoggerSql<T>(this IServiceCollection services, IConfiguration configuration, ServiceLifetime lifetime) where T : BaseSqlModel
     {
         switch (lifetime)
         {
@@ -127,8 +100,7 @@ public static class Initializer
                     options.UseSqlServer(config.SqlConnectionString);
                 });
 
-                //services.RegisterRepositoryBase<LogDbContext<T>>();
-                services.AddSingleton(typeof(IRepositoryBase<,>), typeof(RepositoryBase<,>));
+                                services.AddSingleton(typeof(IRepositoryBase<,>), typeof(RepositoryBase<,>));
                 services.AddSingleton(typeof(IGenericRepository<,>), typeof(GenericRepository<,>));
 
                 services.AddSingleton(typeof(ILogServiceSql<T, LogDbContext<T>>), typeof(LogServiceSql<T, LogDbContext<T>>));
@@ -153,8 +125,7 @@ public static class Initializer
                     options.UseSqlServer(config.SqlConnectionString);
                 }, lifetime);
 
-                //services.RegisterRepositoryBase<LogDbContext<T>>();
-                services.AddScoped(typeof(IRepositoryBase<,>), typeof(RepositoryBase<,>));
+                                services.AddScoped(typeof(IRepositoryBase<,>), typeof(RepositoryBase<,>));
                 services.AddScoped(typeof(IGenericRepository<,>), typeof(GenericRepository<,>));
 
                 services.AddScoped(typeof(ILogServiceSql<T, LogDbContext<T>>), typeof(LogServiceSql<T, LogDbContext<T>>));
@@ -179,8 +150,7 @@ public static class Initializer
                     options.UseSqlServer(config.SqlConnectionString);
                 }, lifetime);
 
-                //services.RegisterRepositoryBase<LogDbContext<T>>();
-                services.AddTransient(typeof(IRepositoryBase<,>), typeof(RepositoryBase<,>));
+                                services.AddTransient(typeof(IRepositoryBase<,>), typeof(RepositoryBase<,>));
                 services.AddTransient(typeof(IGenericRepository<,>), typeof(GenericRepository<,>));
                 services.AddTransient(typeof(ILogServiceSql<T, LogDbContext<T>>), typeof(LogServiceSql<T, LogDbContext<T>>));
                 services.AddTransient(typeof(LogManagerSql<T>));
@@ -201,12 +171,7 @@ public static class Initializer
         }
     }
 
-    /// <summary>  
-    /// Perform database migration after service registration  
-    /// </summary>  
-    /// <typeparam name="T"></typeparam>  
-    /// <param name="host"></param>  
-    public static void MigrateLogDatabase<T>(this IHost host) where T : BaseSqlModel
+                        public static void MigrateLogDatabase<T>(this IHost host) where T : BaseSqlModel
     {
         using (var scope = host.Services.CreateScope())
         {
@@ -220,8 +185,7 @@ public static class Initializer
             }
             catch (Exception ex)
             {
-                // Log the exception here  
-                throw new InvalidOperationException("An error occurred during database migration.", ex);
+                                throw new InvalidOperationException("An error occurred during database migration.", ex);
             }
         }
     }
@@ -289,17 +253,14 @@ public static class Initializer
     }
     public static void AddSanLogger(this IServiceCollection services, IConfiguration configuration, ServiceLifetime lifetime)
     {
-        // Configure database settings  
-        services.Configure<LogDatabaseSettings>(configuration.GetSection("LogDatabaseSettings"));
+                services.Configure<LogDatabaseSettings>(configuration.GetSection("LogDatabaseSettings"));
 
-        // Register log services with the specified lifetime  
-        services.Add(new ServiceDescriptor(typeof(LogService<LogModel>), typeof(LogService<LogModel>), lifetime));
+                services.Add(new ServiceDescriptor(typeof(LogService<LogModel>), typeof(LogService<LogModel>), lifetime));
 
         services.Add(new ServiceDescriptor(typeof(LogManager<LogModel>), typeof(LogManager<LogModel>), lifetime));
         services.Add(new ServiceDescriptor(typeof(QueueManager<LogModel>), typeof(QueueManager<LogModel>), lifetime));
 
-        // Register hosted services, ensuring they won't be added multiple times  
-        if (!_isHostedServicesAdded)
+                if (!_isHostedServicesAdded)
         {
             services.AddHttpContextAccessor();
             services.Add(new ServiceDescriptor(typeof(IMdbLogger<>), typeof(LogManagerStandard<>), lifetime));

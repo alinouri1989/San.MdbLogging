@@ -48,8 +48,7 @@ namespace San.MdbLogging.LogFile
 
         void WriteLine(string Text)
         {
-            // check the file size after any 100 writes
-            Counter++;
+                        Counter++;
             if (Counter % 100 == 0)
             {
                 FileInfo FI = new FileInfo(FilePath);
@@ -75,8 +74,7 @@ namespace San.MdbLogging.LogFile
 
         void PrepareLengths()
         {
-            // prepare the lengs table
-            Lengths["Time"] = 24;
+                        Lengths["Time"] = 24;
             Lengths["Host"] = 16;
             Lengths["User"] = 16;
             Lengths["Level"] = 14;
@@ -91,8 +89,7 @@ namespace San.MdbLogging.LogFile
             FilePath = Path.Combine(Settings.Folder, LogEntry.StaticHostName +
                        "-" + DateTime.Now.ToString("yyyyMMdd-HHmm") + ".log");
 
-            // titles
-            StringBuilder SB = new StringBuilder();
+                        StringBuilder SB = new StringBuilder();
             SB.Append(Pad("Time", Lengths["Time"]));
             SB.Append(Pad("Host", Lengths["Host"]));
             SB.Append(Pad("User", Lengths["User"]));
@@ -168,8 +165,7 @@ namespace San.MdbLogging.LogFile
                         WriteLogLine();
                         System.Threading.Thread.Sleep(100);
                     }
-                    catch // (Exception ex)
-                    {
+                    catch                     {
                     }
                 }
             });
@@ -185,8 +181,7 @@ namespace San.MdbLogging.LogFile
         public FileLoggerProvider(IOptionsMonitor<FileLoggerOptions> Settings)
             : this(Settings.CurrentValue)
         {
-            // https://docs.microsoft.com/en-us/aspnet/core/fundamentals/change-tokens
-            SettingsChangeToken = Settings.OnChange(settings =>
+                        SettingsChangeToken = Settings.OnChange(settings =>
             {
                 this.Settings = settings;
             });
@@ -197,8 +192,7 @@ namespace San.MdbLogging.LogFile
             PrepareLengths();
             this.Settings = Settings;
 
-            // create the first file
-            BeginFile();
+                        BeginFile();
 
             ThreadProc();
         }

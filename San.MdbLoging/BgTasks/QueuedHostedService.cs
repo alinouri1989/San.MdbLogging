@@ -15,50 +15,35 @@ namespace San.MdbLogging.BgTasks
             _taskQueue = taskQueue ?? throw new ArgumentNullException(nameof(taskQueue));
         }
 
-        /// <summary>  
-        /// Executes the background processing loop.  
-        /// </summary>  
-        /// <param name="stoppingToken">Token to signal cancellation.</param>  
-        /// <returns>A task that represents the execution.</returns>  
-        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+                                                protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             Debug.WriteLine("QueuedHostedService is starting.");
 
-            // Main processing loop  
-            while (!stoppingToken.IsCancellationRequested)
+                        while (!stoppingToken.IsCancellationRequested)
             {
                 try
                 {
-                    // Dequeue the next work item  
-                    var workItem = await _taskQueue.DequeueAsync(stoppingToken);
+                                        var workItem = await _taskQueue.DequeueAsync(stoppingToken);
 
                     if (workItem != null)
                     {
-                        // Execute the work item's function  
-                        await workItem.WorkFunction(workItem.Item, stoppingToken);
+                                                await workItem.WorkFunction(workItem.Item, stoppingToken);
                     }
                 }
                 catch (OperationCanceledException)
                 {
-                    // Gracefully handle cancellation  
-                    Debug.WriteLine("QueuedHostedService is stopping due to cancellation.");
+                                        Debug.WriteLine("QueuedHostedService is stopping due to cancellation.");
                 }
                 catch (Exception ex)
                 {
-                    // Log or handle unexpected errors  
-                    Debug.WriteLine($"QueuedHostedService encountered an error: {ex.Message}");
+                                        Debug.WriteLine($"QueuedHostedService encountered an error: {ex.Message}");
                 }
             }
 
             Debug.WriteLine("QueuedHostedService has stopped.");
         }
 
-        /// <summary>  
-        /// Stops the background service gracefully.  
-        /// </summary>  
-        /// <param name="stoppingToken">Token to signal cancellation.</param>  
-        /// <returns>A task that represents the stop operation.</returns>  
-        public override async Task StopAsync(CancellationToken stoppingToken)
+                                                public override async Task StopAsync(CancellationToken stoppingToken)
         {
             Debug.WriteLine("QueuedHostedService is stopping.");
             await base.StopAsync(stoppingToken);

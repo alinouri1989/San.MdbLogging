@@ -19,42 +19,24 @@ namespace San.MdbLogging.BgTasks
                 throw new ArgumentNullException(nameof(options), "LogDatabaseSettings options must be provided.");
             }
 
-            _batchSize = options.Value.BatchSize; // Batch size from configuration  
-        }
+            _batchSize = options.Value.BatchSize;         }
 
-        /// <summary>  
-        /// Adds a new work item to the queue.  
-        /// </summary>  
-        /// <param name="item">The item to process.</param>  
-        /// <param name="workFunction">The function to execute for the item.</param>  
-        public void QueueBackgroundWorkItem(T item, Func<T, CancellationToken, Task> workFunction)
+                                                public void QueueBackgroundWorkItem(T item, Func<T, CancellationToken, Task> workFunction)
         {
             if (item == null) throw new ArgumentNullException(nameof(item));
             if (workFunction == null) throw new ArgumentNullException(nameof(workFunction));
 
             var workItem = new WorkItem<T>(item, workFunction);
             _workItems.Enqueue(workItem);
-            _signal.Release(); // Signal that a new item is available  
-        }
+            _signal.Release();         }
 
-        /// <summary>  
-        /// Dequeues a work item from the queue.  
-        /// </summary>  
-        /// <param name="cancellationToken">A token to cancel the operation.</param>  
-        /// <returns>The dequeued work item.</returns>  
-        public async Task<WorkItem<T>> DequeueAsync(CancellationToken cancellationToken)
+                                                public async Task<WorkItem<T>> DequeueAsync(CancellationToken cancellationToken)
         {
-            await _signal.WaitAsync(cancellationToken); // Wait for an item to become available  
-            _workItems.TryDequeue(out WorkItem<T> workItem);
-            return workItem; // This can be null if the queue was empty, but shouldn't be due to the semaphore  
-        }
+            await _signal.WaitAsync(cancellationToken);             _workItems.TryDequeue(out WorkItem<T> workItem);
+            return workItem;         }
     }
 
-    /// <summary>  
-    /// Represents a work item in the background task queue.  
-    /// </summary>  
-    /// <typeparam name="T">The type of the item being processed.</typeparam>  
-    public class WorkItem<T>
+                    public class WorkItem<T>
     {
         public T Item { get; }
         public Func<T, CancellationToken, Task> WorkFunction { get; }
@@ -66,11 +48,7 @@ namespace San.MdbLogging.BgTasks
         }
     }
 
-    /// <summary>  
-    /// Interface for a background task queue.  
-    /// </summary>  
-    /// <typeparam name="T">The type of items in the queue.</typeparam>  
-    public interface IBackgroundTaskQueue<T> where T : IBaseModel
+                    public interface IBackgroundTaskQueue<T> where T : IBaseModel
     {
         void QueueBackgroundWorkItem(T item, Func<T, CancellationToken, Task> workFunction);
         Task<WorkItem<T>> DequeueAsync(CancellationToken cancellationToken);

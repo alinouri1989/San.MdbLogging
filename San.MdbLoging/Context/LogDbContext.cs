@@ -9,13 +9,9 @@ public class LogDbContext<T> : DbContext where T : BaseSqlModel
     {
     }
 
-    public DbSet<T> Logs { get; set; } // Renamed for clarity  
-
-    // Override OnModelCreating if needed  
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    public DbSet<T> Logs { get; set; } 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        modelBuilder.Entity<T>().ToTable(typeof(T).Name); // Ensure the table name matches the entity name  
-        modelBuilder.Entity<T>().Property(e => e.TraceCode); // Example configuration  
-    }
+        modelBuilder.Entity<T>().ToTable(typeof(T).Name);         modelBuilder.Entity<T>().Property(e => e.TraceCode);     }
 }

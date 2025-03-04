@@ -5,12 +5,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace San.MdbLogging.Models;
 
-//public class BaseSqlModel
-//{
-//    public long Id { get; set; }
 
-//    public string TraceCode { get; set; }
-//}
 
 public interface IBaseModel<TKey>
 {
@@ -23,8 +18,7 @@ public interface IBaseModel<TKey>
 
 public interface IBaseModel
 {
-    // Define common properties/methods that you expect in both models  
-}
+    }
 
 public class BaseMongoModel : IBaseModel, IBaseModel<string>
 {

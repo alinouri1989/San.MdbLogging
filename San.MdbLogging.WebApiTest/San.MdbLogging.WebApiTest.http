@@ -1,5 +1,4 @@
-@San.MdbLogging.WebApiTest_HostAddress = http://localhost:5149
-
+@San.MdbLogging.WebApiTest_HostAddress = http:
 GET {{San.MdbLogging.WebApiTest_HostAddress}}/weatherforecast/
 Accept: application/json
 

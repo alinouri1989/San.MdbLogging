@@ -11,19 +11,16 @@ namespace San.MdbLogging
 
         public void Serialize(BsonSerializationContext context, BsonSerializationArgs args, DateTime value)
         {
-            // Convert to UTC before serialization  
             var utcDateTime = DateTime.SpecifyKind(value, DateTimeKind.Utc);
             context.Writer.WriteDateTime(utcDateTime.Ticks);
         }
 
         public DateTime Deserialize(BsonDeserializationContext context, BsonDeserializationArgs args)
         {
-            // Read the date time from BSON and convert to local time  
             var ticks = context.Reader.ReadDateTime();
             return DateTime.SpecifyKind(new DateTime(ticks), DateTimeKind.Local);
         }
 
-        // Explicit interface implementation to satisfy IBsonSerializer  
         object IBsonSerializer.Deserialize(BsonDeserializationContext context, BsonDeserializationArgs args)
         {
             return Deserialize(context, args);

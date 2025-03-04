@@ -47,8 +47,7 @@ namespace San.MdbLogging.LogFile
                 }
 
                 this.IsDisposed = true;
-                GC.SuppressFinalize(this);  // instructs GC not bother to call the destructor   
-            }
+                GC.SuppressFinalize(this);              }
         }
 
         protected virtual void Dispose(bool disposing)

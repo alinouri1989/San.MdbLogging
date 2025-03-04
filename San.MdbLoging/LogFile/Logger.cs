@@ -40,27 +40,15 @@ namespace San.MdbLogging.LogFile
                 LogEntry Info = new LogEntry();
                 Info.Category = this.Category;
                 Info.Level = logLevel;
-                // well, the passed default formatter function 
-                // does not take the exception into account
-                // SEE: https://github.com/aspnet/Extensions/blob/master/src/
-                //Logging / Logging.Abstractions / src / LoggerExtensions.cs
-                Info.Text = exception?.Message ?? state.ToString(); // formatter(state, exception)
-                Info.Exception = exception;
+                                                                                Info.Text = exception?.Message ?? state.ToString();                 Info.Exception = exception;
                 Info.EventId = eventId;
                 Info.State = state;
 
-                // well, you never know what it really is
-                if (state is string)
+                                if (state is string)
                 {
                     Info.StateText = state.ToString();
                 }
-                // in case we have to do with a message template, 
-                // let's get the keys and values (for Structured Logging providers)
-                // SEE: https://docs.microsoft.com/en-us/aspnet/core/
-                // fundamentals/logging#log-message-template
-                // SEE: https://softwareengineering.stackexchange.com/
-                // questions/312197/benefits-of-structured-logging-vs-basic-logging
-                else if (state is IEnumerable<KeyValuePair<string, object>> Properties)
+                                                                                                                else if (state is IEnumerable<KeyValuePair<string, object>> Properties)
                 {
                     Info.StateProperties = new Dictionary<string, object>();
 
@@ -70,8 +58,7 @@ namespace San.MdbLogging.LogFile
                     }
                 }
 
-                // gather info about scope(s), if any
-                if (Provider.ScopeProvider != null)
+                                if (Provider.ScopeProvider != null)
                 {
                     Provider.ScopeProvider.ForEachScope((value, loggingProps) =>
                     {

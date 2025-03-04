@@ -33,15 +33,13 @@ public class LogManagerStandardSql<TEntity, LType> : ISQLLogger<TEntity, LType>
         string level = exception != null ? "ERROR" : "INFO";
         string traceCode = Guid.NewGuid().ToString();
 
-        // Set the LogGuid in HttpContext if it doesn't exist  
-        if (_httpContextAccessor != null && _httpContextAccessor.HttpContext != null &&
+                if (_httpContextAccessor != null && _httpContextAccessor.HttpContext != null &&
             string.IsNullOrWhiteSpace((string)_httpContextAccessor.HttpContext.Items["LogGuid"]))
         {
             _httpContextAccessor.HttpContext.Items.Add("LogGuid", traceCode);
         }
 
-        //TEntity logModel = (TEntity)Activator.CreateInstance(typeof(TEntity));
-
+        
         var logModelProperties = typeof(TEntity).GetProperties();
 
         var staticProperties = new Dictionary<string, object>
@@ -53,8 +51,7 @@ public class LogManagerStandardSql<TEntity, LType> : ISQLLogger<TEntity, LType>
                 { "Logger", _logType.Name }
             };
 
-        // Also set the static properties  
-        foreach (var entry in staticProperties)
+                foreach (var entry in staticProperties)
         {
             var targetProperty = logModelProperties.FirstOrDefault(p => p.Name == entry.Key);
             if (targetProperty != null)
@@ -63,8 +60,7 @@ public class LogManagerStandardSql<TEntity, LType> : ISQLLogger<TEntity, LType>
             }
         }
 
-        // Queue the logging task  
-        _backgroundTaskQueue.QueueBackgroundWorkItem(entityLog,async (model,ct) => await _logger.LogInternal(model));
+                _backgroundTaskQueue.QueueBackgroundWorkItem(entityLog,async (model,ct) => await _logger.LogInternal(model));
     }
 
     public void Log(TEntity entityLog)
@@ -72,51 +68,24 @@ public class LogManagerStandardSql<TEntity, LType> : ISQLLogger<TEntity, LType>
         DateTime now = DateTime.Now;
         string traceCode = Guid.NewGuid().ToString();
 
-        // Set the LogGuid in HttpContext if it doesn't exist  
-        if (_httpContextAccessor != null && _httpContextAccessor.HttpContext != null &&
+                if (_httpContextAccessor != null && _httpContextAccessor.HttpContext != null &&
             string.IsNullOrWhiteSpace((string)_httpContextAccessor.HttpContext.Items["LogGuid"]))
         {
             _httpContextAccessor.HttpContext.Items.Add("LogGuid", traceCode);
         }
 
-        //TEntity logModel = (TEntity)Activator.CreateInstance(typeof(TEntity));
-
+        
         var logModelProperties = typeof(TEntity).GetProperties();
-        //var entityLogProperties = entityLog.GetType().GetProperties();
-
-        //var propertyMap = new Dictionary<string, string>
-        //    {
-        //        { "Message", "Message" },
-        //        { "ActionName", "ActionName" },
-        //        { "SourceName", "SourceName" },
-        //        { "Metadata", "Metadata" },
-        //        { "InsuranceType", "InsuranceType" },
-        //        { "NationalCode", "NationalCode" },
-        //        { "RequestId", "RequestId" }
-        //    };
-
+        
+                                                                                
         var staticProperties = new Dictionary<string, object>
             {
                 { "TraceCode", traceCode },
                 { "Logger", _logType.Name }
             };
 
-        //foreach (var entry in propertyMap)
-        //{
-        //    var sourceProperty = entityLogProperties.FirstOrDefault(p => p.Name == entry.Key);
-        //    if (sourceProperty != null)
-        //    {
-        //        var value = sourceProperty.GetValue(entityLog);
-        //        var targetProperty = logModelProperties.FirstOrDefault(p => p.Name == entry.Value);
-        //        if (targetProperty != null)
-        //        {
-        //            targetProperty.SetValue(logModel, value);
-        //        }
-        //    }
-        //}
-
-        //// Also set the static properties  
-        foreach (var entry in staticProperties)
+                                                                                                        
+                foreach (var entry in staticProperties)
         {
             var targetProperty = logModelProperties.FirstOrDefault(p => p.Name == entry.Key);
             if (targetProperty != null)
@@ -125,8 +94,7 @@ public class LogManagerStandardSql<TEntity, LType> : ISQLLogger<TEntity, LType>
             }
         }
 
-        // Queue the logging task  
-        _backgroundTaskQueue.QueueBackgroundWorkItem(entityLog, async (model, ct) => await _logger.LogInternal(model));
+                _backgroundTaskQueue.QueueBackgroundWorkItem(entityLog, async (model, ct) => await _logger.LogInternal(model));
 
     }
 }
